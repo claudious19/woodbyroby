@@ -76,9 +76,21 @@ for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) {
   assert.ok(!imageHashes.has(hash), `Bild wird mehrfach angezeigt: ${match[1]}`);
   imageHashes.add(hash);
 }
-for (const name of fs.readdirSync(path.join(root, 'images')).filter(name => /^WhatsApp Image.*\.jpeg$/.test(name))) {
-  const hash = crypto.createHash('sha256').update(fs.readFileSync(path.join(root, 'images', name))).digest('hex');
-  assert.ok(imageHashes.has(hash), `Neues Motiv fehlt: ${name}`);
+for (const asset of [
+  'gift-hamper-retouched.png',
+  'board-organic-cushions-retouched.png',
+  'board-organic-vertical-retouched.png',
+]) {
+  assert.ok(html.includes(`images/${asset}`), `Retuschiertes Bild fehlt: ${asset}`);
+}
+
+assert.ok(
+  !html.includes('data-filter="upcycled"') && !html.includes('data-cat="upcycled"'),
+  'Die Upcycled-Kategorie darf nicht mehr in der Galerie erscheinen.',
+);
+
+for (const asset of ['IMG-20260612-WA0012.jpg', 'IMG-20260612-WA0016.jpg', 'IMG-20260612-WA0017.jpg']) {
+  assert.ok(!html.includes(asset), `Entferntes Upcycled-Bild darf nicht mehr referenziert werden: ${asset}`);
 }
 assert.ok(!html.includes('roby_logo_golden') && !html.includes('logo_roby'), 'Logo darf nicht eingebunden sein.');
 assert.ok(!html.includes('I Taglieri di Roby') && !javascript.includes('I Taglieri di Roby'), 'Alter Markenname darf nicht angezeigt werden.');
