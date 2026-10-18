@@ -941,6 +941,9 @@ em { font-style: italic; color: var(--walnut); }
   color: var(--gold);
   line-height: 1;
 }
+.price-on-request {
+  font-size: clamp(1.6rem, 2.7vw, 2.15rem);
+}
 .pricing-note {
   text-align: center;
   color: rgba(245,237,224,0.45);
