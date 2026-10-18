@@ -78,6 +78,7 @@ const translations = {
     "pricing.length": "Lunghezza",
     "pricing.width": "Larghezza",
     "pricing.sizeOnRequest": "Misure su richiesta",
+    "pricing.guideDimensions": "Misure indicative",
     "pricing.from": "da",
     "pricing.popular": "Più richiesto",
     "pricing.s.title": "Piccolo",
@@ -106,7 +107,7 @@ const translations = {
     "pricing.l.f2": "✦ Incisione personalizzata",
     "pricing.l.f3": "✦ Cofanetto regalo incluso",
     "pricing.l.f4": "✦ Certificato di autenticità",
-    "pricing.note": "Contattami per un preventivo personalizzato. Creo anche pezzi su commissione per regali e occasioni speciali.",
+    "pricing.note": "Le misure indicate sono solo orientative. Nel modulo di contatto puoi indicare comodamente le dimensioni esatte desiderate.",
     "maint.label": "Cura del prodotto",
     "maint.sub": "Un tagliere in legno ben curato dura una vita. Segui questi semplici consigli.",
     "maint.1.title": "Lavaggio",
@@ -310,6 +311,7 @@ const translations = {
     "pricing.length": "Length",
     "pricing.width": "Width",
     "pricing.sizeOnRequest": "Dimensions on request",
+    "pricing.guideDimensions": "Guide dimensions",
     "pricing.from": "from",
     "pricing.popular": "Most requested",
     "pricing.s.title": "Small",
@@ -338,7 +340,7 @@ const translations = {
     "pricing.l.f2": "✦ Custom engraving",
     "pricing.l.f3": "✦ Gift box included",
     "pricing.l.f4": "✦ Certificate of authenticity",
-    "pricing.note": "Contact me for a custom quote. I also create commissioned pieces for gifts and special occasions.",
+    "pricing.note": "The stated dimensions are guide sizes only. You can enter your exact desired dimensions in the contact form.",
     "maint.label": "Product care",
     "maint.sub": "A well-maintained wooden cutting board lasts a lifetime. Follow these simple tips.",
     "maint.1.title": "Washing",
@@ -542,6 +544,7 @@ const translations = {
     "pricing.length": "Länge",
     "pricing.width": "Breite",
     "pricing.sizeOnRequest": "Maße auf Anfrage",
+    "pricing.guideDimensions": "Richtgröße",
     "pricing.from": "ab",
     "pricing.popular": "Am gefragtesten",
     "pricing.s.title": "Klein",
@@ -570,7 +573,7 @@ const translations = {
     "pricing.l.f2": "✦ Individuelle Gravur",
     "pricing.l.f3": "✦ Geschenkbox inklusive",
     "pricing.l.f4": "✦ Echtheitszertifikat",
-    "pricing.note": "Kontaktiere mich für ein individuelles Angebot. Ich fertige auch Auftragsarbeiten für Geschenke und besondere Anlässe an.",
+    "pricing.note": "Die genannten Maße sind Richtgrößen. Deine genauen Wunschmaße kannst du im Kontaktformular angeben.",
     "maint.label": "Produktpflege",
     "maint.sub": "Ein gut gepflegtes Holzschneidebrett hält lange. Beachte diese einfachen Pflegetipps.",
     "maint.1.title": "Reinigung",
@@ -773,6 +776,7 @@ const translations = {
     "pricing.length": "Longueur",
     "pricing.width": "Largeur",
     "pricing.sizeOnRequest": "Dimensions sur demande",
+    "pricing.guideDimensions": "Dimensions indicatives",
     "pricing.from": "à partir de",
     "pricing.popular": "Le plus demandé",
     "pricing.s.title": "Petit",
@@ -801,7 +805,7 @@ const translations = {
     "pricing.l.f2": "✦ Gravure personnalisée",
     "pricing.l.f3": "✦ Coffret cadeau inclus",
     "pricing.l.f4": "✦ Certificat d'authenticité",
-    "pricing.note": "Contactez-moi pour un devis personnalisé. Je réalise également des pièces sur commande pour les cadeaux et les occasions spéciales.",
+    "pricing.note": "Les dimensions indiquées sont seulement des repères. Vous pouvez préciser les dimensions exactes souhaitées dans le formulaire de contact.",
     "maint.label": "Entretien du produit",
     "maint.sub": "Une planche à découper en bois bien entretenue dure toute une vie. Suivez ces conseils simples.",
     "maint.1.title": "Lavage",
@@ -973,7 +977,7 @@ function updateConfiguredContent(lang, t) {
     }
     dimensions.textContent = size.lengthCm === null
       ? t['pricing.sizeOnRequest']
-      : `${t['pricing.length']} ${new Intl.NumberFormat(lang).format(size.lengthCm)} cm · ${t['pricing.width']} ${new Intl.NumberFormat(lang).format(size.widthCm)} cm`;
+      : `${t['pricing.guideDimensions']}: ${formatDimensions(size, lang)}`;
   });
 
   for (const size of ['small', 'medium', 'pizza', 'large']) {
