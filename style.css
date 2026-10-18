@@ -941,17 +941,6 @@ em { font-style: italic; color: var(--walnut); }
   color: var(--gold);
   line-height: 1;
 }
-.pricing-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-.pricing-features li {
-  font-size: 0.85rem;
-  color: rgba(245,237,224,0.7);
-  padding-left: 0.2rem;
-}
 .pricing-note {
   text-align: center;
   color: rgba(245,237,224,0.45);
@@ -1763,11 +1752,6 @@ section[id] {
   font-size: clamp(2rem, 4vw, 2.35rem);
 }
 
-.pricing-features {
-  gap: 0.42rem;
-}
-
-.pricing-features li,
 .pricing-note {
   font-size: clamp(0.78rem, 1.1vw, 0.84rem);
   line-height: 1.45;
@@ -2620,8 +2604,7 @@ section,
 .pricing-wood-badge { color: var(--maple); line-height: 1; }
 .pricing-popular { top: 1rem; right: 1rem; left: auto; transform: none; border-radius: 4px; letter-spacing: 0.04em; }
 .pricing .section-sub, .pricing-desc, .pricing-note { color: rgba(242,234,220,0.85); }
-.pricing-features li { color: rgba(242,234,220,0.85); }
-.about-body p, .maint-step p, .pricing-desc, .pricing-features li, .contact-form-heading p { font-size: 0.95rem; line-height: 1.65; }
+.about-body p, .maint-step p, .pricing-desc, .contact-form-heading p { font-size: 0.95rem; line-height: 1.65; }
 .maint-icon { display: none; }
 .maint-step { border-radius: 12px; }
 .contact-form-card { border-radius: 12px; box-shadow: 0 3px 18px rgba(74,41,18,0.05); }
