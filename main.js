@@ -102,6 +102,9 @@ const translations = {
     "pricing.tables.title": "Tavoli in legno",
     "pricing.tables.desc": "Tavolini e tavoli artigianali in legno d'olivo e altri legni selezionati.",
     "pricing.tables.price": "Prezzo su richiesta",
+    "pricing.seasonal.title": "Creazioni stagionali",
+    "pricing.seasonal.desc": "Decorazioni dell'Avvento e idee regalo realizzate a mano su basi in legno.",
+    "pricing.seasonal.price": "Prezzo su richiesta",
     "pricing.l.f1": "✦ Legni pregiati selezionati",
     "pricing.l.f2": "✦ Incisione personalizzata",
     "pricing.l.f3": "✦ Cofanetto regalo incluso",
@@ -207,6 +210,10 @@ const translations = {
     "gallery.sub": "Forme naturali, pezzi unici e dettagli realizzati a mano. Scegli una categoria per scoprire la tua creazione preferita.",
     "gallery.results": "creazioni",
     "gallery.tables": "Tavoli",
+    "gallery.seasonal": "Creazioni stagionali",
+    "gallery.seasonalDetail": "Decorazioni dell'Avvento",
+    "gallery.zoom": "Ingrandisci immagine",
+    "gallery.zoomClose": "Chiudi immagine",
     "gallery.humor": "Incisione con un sorriso",
     "gallery.cleanLines": "Linee essenziali",
     "gallery.batch": "Una serie di pezzi unici",
@@ -330,6 +337,9 @@ const translations = {
     "pricing.tables.title": "Wooden tables",
     "pricing.tables.desc": "Handcrafted side tables and tables in olive wood and other selected woods.",
     "pricing.tables.price": "Price on request",
+    "pricing.seasonal.title": "Seasonal creations",
+    "pricing.seasonal.desc": "Handmade Advent decorations and gift ideas on wooden bases.",
+    "pricing.seasonal.price": "Price on request",
     "pricing.l.f1": "✦ Selected fine woods",
     "pricing.l.f2": "✦ Custom engraving",
     "pricing.l.f3": "✦ Gift box included",
@@ -435,6 +445,10 @@ const translations = {
     "gallery.sub": "Natural shapes, unique pieces and handcrafted details. Choose a category to find your favourite creation.",
     "gallery.results": "creations",
     "gallery.tables": "Tables",
+    "gallery.seasonal": "Seasonal creations",
+    "gallery.seasonalDetail": "Advent decorations",
+    "gallery.zoom": "Zoom image",
+    "gallery.zoomClose": "Close image",
     "gallery.humor": "Engraving with a smile",
     "gallery.cleanLines": "Clean lines",
     "gallery.batch": "A collection of unique pieces",
@@ -558,6 +572,9 @@ const translations = {
     "pricing.tables.title": "Holztische",
     "pricing.tables.desc": "Handgefertigte Beistelltische und Tische aus Olivenholz und weiteren ausgewählten Hölzern.",
     "pricing.tables.price": "Preis auf Anfrage",
+    "pricing.seasonal.title": "Saisonale Kreationen",
+    "pricing.seasonal.desc": "Handgefertigte Adventsdekorationen und Geschenkideen auf Holzbasen.",
+    "pricing.seasonal.price": "Preis auf Anfrage",
     "pricing.l.f1": "✦ Ausgewählte Edelhölzer",
     "pricing.l.f2": "✦ Individuelle Gravur",
     "pricing.l.f3": "✦ Geschenkbox inklusive",
@@ -663,6 +680,10 @@ const translations = {
     "gallery.sub": "Natürliche Formen, Einzelstücke und handgefertigte Details. Wähle eine Kategorie und entdecke dein Lieblingsstück.",
     "gallery.results": "Kreationen",
     "gallery.tables": "Tische",
+    "gallery.seasonal": "Saisonale Kreationen",
+    "gallery.seasonalDetail": "Adventsdekorationen",
+    "gallery.zoom": "Bild vergrößern",
+    "gallery.zoomClose": "Bild schließen",
     "gallery.humor": "Gravur mit einem Augenzwinkern",
     "gallery.cleanLines": "Klare Linien",
     "gallery.batch": "Eine Reihe von Einzelstücken",
@@ -785,6 +806,9 @@ const translations = {
     "pricing.tables.title": "Tables en bois",
     "pricing.tables.desc": "Tables d'appoint et tables artisanales en bois d'olivier et autres bois sélectionnés.",
     "pricing.tables.price": "Prix sur demande",
+    "pricing.seasonal.title": "Créations saisonnières",
+    "pricing.seasonal.desc": "Décorations de l'Avent et idées cadeaux réalisées à la main sur des bases en bois.",
+    "pricing.seasonal.price": "Prix sur demande",
     "pricing.l.f1": "✦ Bois précieux sélectionnés",
     "pricing.l.f2": "✦ Gravure personnalisée",
     "pricing.l.f3": "✦ Coffret cadeau inclus",
@@ -891,6 +915,10 @@ const translations = {
     "gallery.sub": "Formes naturelles, pièces uniques et détails faits main. Choisissez une catégorie pour découvrir votre création préférée.",
     "gallery.results": "créations",
     "gallery.tables": "Tables",
+    "gallery.seasonal": "Créations saisonnières",
+    "gallery.seasonalDetail": "Décorations de l'Avent",
+    "gallery.zoom": "Agrandir l'image",
+    "gallery.zoomClose": "Fermer l'image",
     "gallery.humor": "Une gravure pleine d’humour",
     "gallery.cleanLines": "Lignes épurées",
     "gallery.batch": "Une collection de pièces uniques",
@@ -926,6 +954,7 @@ const categoryTranslationKeys = {
   'senza-manico': 'gallery.nohandle',
   'pizza-al-metro': 'gallery.meterpizza',
   tables: 'gallery.tables',
+  seasonal: 'gallery.seasonal',
 };
 
 const configNode = document.getElementById('site-config');
@@ -1036,6 +1065,7 @@ function applyLanguage(lang) {
       image.alt = `${t[categoryTranslationKeys[item.dataset.cat]]}: ${caption.textContent.trim()}`;
     }
   });
+  updateGalleryZoomLabels(t);
   document.title = t['meta.title'];
   document.querySelector('meta[name="description"]').content = t['meta.description'];
   document.querySelector('meta[property="og:description"]').content = t['meta.description'];
@@ -1189,6 +1219,54 @@ filterBtns.forEach(button => {
   const filter = button.dataset.filter;
   const count = [...galleryItems].filter(item => filter === 'all' || item.dataset.cat === filter).length;
   button.querySelector('.filter-count').textContent = count;
+});
+
+const imageLightbox = document.getElementById('image-lightbox');
+const imageLightboxImage = document.getElementById('image-lightbox-image');
+const imageLightboxCaption = document.getElementById('image-lightbox-caption');
+const imageLightboxClose = document.getElementById('image-lightbox-close');
+let imageLightboxTrigger = null;
+
+function updateGalleryZoomLabels(t) {
+  document.querySelectorAll('.gallery-img[role="button"]').forEach(container => {
+    const image = container.querySelector('img');
+    container.setAttribute('aria-label', `${image.alt}: ${t['gallery.zoom']}`);
+  });
+}
+
+function closeImageLightbox() {
+  if (imageLightbox.open) imageLightbox.close();
+  imageLightboxTrigger?.focus({ preventScroll: true });
+}
+
+function openImageLightbox(container) {
+  const image = container.querySelector('img');
+  imageLightboxTrigger = container;
+  imageLightboxImage.src = image.currentSrc || image.src;
+  imageLightboxImage.alt = image.alt;
+  imageLightboxCaption.textContent = image.alt;
+  imageLightbox.showModal();
+  imageLightboxClose.focus({ preventScroll: true });
+}
+
+document.querySelectorAll('.gallery-img').forEach(container => {
+  container.setAttribute('role', 'button');
+  container.tabIndex = 0;
+  container.addEventListener('click', () => openImageLightbox(container));
+  container.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    openImageLightbox(container);
+  });
+});
+updateGalleryZoomLabels(translations[currentLang]);
+imageLightboxClose.addEventListener('click', closeImageLightbox);
+imageLightbox.addEventListener('click', event => {
+  if (event.target === imageLightbox) closeImageLightbox();
+});
+imageLightbox.addEventListener('cancel', event => {
+  event.preventDefault();
+  closeImageLightbox();
 });
 
 // E-Mail-Anfrage

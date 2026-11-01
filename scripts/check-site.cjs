@@ -92,6 +92,11 @@ assert.ok(
 for (const asset of ['IMG-20260612-WA0012.jpg', 'IMG-20260612-WA0016.jpg', 'IMG-20260612-WA0017.jpg']) {
   assert.ok(!html.includes(asset), `Entferntes Upcycled-Bild darf nicht mehr referenziert werden: ${asset}`);
 }
+const seasonalCards = [...html.matchAll(/class="gallery-item reveal" data-cat="seasonal"/g)];
+assert.equal(seasonalCards.length, 13, 'Alle dreizehn saisonalen Kreationen müssen in der Galerie erscheinen.');
+assert.ok(html.includes('data-filter="seasonal"'), 'Filter für saisonale Kreationen fehlt.');
+assert.ok(html.includes('pricing.seasonal.price'), 'Preis auf Anfrage für saisonale Kreationen fehlt.');
+assert.ok(html.includes('id="image-lightbox"'), 'Die Bildvergrößerung fehlt.');
 assert.ok(!html.includes('roby_logo_golden') && !html.includes('logo_roby'), 'Logo darf nicht eingebunden sein.');
 assert.ok(!html.includes('I Taglieri di Roby') && !javascript.includes('I Taglieri di Roby'), 'Alter Markenname darf nicht angezeigt werden.');
 assert.equal(siteConfig.sizes.pizza.priceChf, 160, 'Preis für Pizza al metro fehlt.');
