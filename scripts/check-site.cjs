@@ -93,7 +93,7 @@ for (const asset of ['IMG-20260612-WA0012.jpg', 'IMG-20260612-WA0016.jpg', 'IMG-
   assert.ok(!html.includes(asset), `Entferntes Upcycled-Bild darf nicht mehr referenziert werden: ${asset}`);
 }
 const seasonalCards = [...html.matchAll(/class="gallery-item reveal" data-cat="seasonal"/g)];
-assert.equal(seasonalCards.length, 13, 'Alle dreizehn saisonalen Kreationen müssen in der Galerie erscheinen.');
+assert.equal(seasonalCards.length, 17, 'Alle siebzehn saisonalen Kreationen müssen in der Galerie erscheinen.');
 assert.ok(html.includes('data-filter="seasonal"'), 'Filter für saisonale Kreationen fehlt.');
 assert.ok(html.includes('pricing.seasonal.price'), 'Preis auf Anfrage für saisonale Kreationen fehlt.');
 assert.ok(html.includes('id="image-lightbox"'), 'Die Bildvergrößerung fehlt.');
