@@ -12,6 +12,17 @@ const javascript = fs.readFileSync(path.join(root, 'main.js'), 'utf8');
 const envSource = fs.readFileSync(path.join(root, '.env'), 'utf8');
 const siteConfig = loadConfig(envSource);
 const renderedHtml = renderHtml(html, siteConfig);
+const germanDescription = 'Handgefertigte Schneidebretter, persönliche Holzgeschenke und Lasergravuren aus der Schweiz.';
+assert.match(html, /^<html lang="de">/m, 'Die statische Standardsprache muss Deutsch sein.');
+assert.ok(html.includes('<title>woodbyroby | Holzgeschenke und Lasergravuren</title>'), 'Der statische Seitentitel muss Deutsch sein.');
+assert.ok(html.includes(`<meta name="description" content="${germanDescription}" />`), 'Die Suchmaschinenbeschreibung muss Deutsch sein.');
+assert.ok(html.includes(`<meta property="og:description" content="${germanDescription}" />`), 'Die Vorschau-Beschreibung muss Deutsch sein.');
+assert.ok(html.includes('<meta property="og:locale" content="de_CH" />'), 'Die Vorschau-Sprache muss Deutsch (Schweiz) sein.');
+assert.ok(html.includes(`<meta name="twitter:description" content="${germanDescription}" />`), 'Die Twitter-Beschreibung muss Deutsch sein.');
+assert.ok(html.includes('<link rel="canonical" href="https://claudious19.github.io/woodbyroby/" />'), 'Die aktuelle kanonische Adresse fehlt.');
+assert.ok(!html.includes('https://claudious19.github.io/robywood/'), 'Die veraltete Adresse darf nicht in den Metadaten stehen.');
+assert.ok(html.includes('<span class="lang-code" id="lang-code">DE</span>'), 'Die sichtbare Standardsprache muss Deutsch sein.');
+assert.match(javascript, /let currentLang = 'de';/, 'Der erste Seitenaufruf muss auf Deutsch starten.');
 assert.deepEqual(JSON.parse(renderedHtml.match(/<script id="site-config" type="application\/json">([\s\S]*?)<\/script>/)[1]), siteConfig);
 const disabledConfig = loadConfig(envSource.replace(/^UMAMI_WEBSITE_ID=.*$/m, 'UMAMI_WEBSITE_ID='));
 const renderedDisabledHtml = renderHtml(html, disabledConfig);
@@ -50,7 +61,10 @@ for (const match of html.matchAll(/(?:src|href)="([^"#:]+)"/g)) {
   assert.ok(fs.existsSync(path.join(root, match[1])), `Fehlende Datei: ${match[1]}`);
 }
 for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
-  assert.ok(!JSON.parse(match[1]).telephone, 'Telefonkontakt darf nicht in den Metadaten stehen.');
+  const structuredData = JSON.parse(match[1]);
+  assert.ok(!structuredData.telephone, 'Telefonkontakt darf nicht in den Metadaten stehen.');
+  assert.equal(structuredData.inLanguage, 'de-CH', 'Die strukturierten Daten müssen Deutsch (Schweiz) verwenden.');
+  assert.equal(structuredData.description, germanDescription, 'Die strukturierte Beschreibung muss Deutsch sein.');
 }
 assert.ok(!html.includes('href="tel:'), 'Telefonlink darf nicht angezeigt werden.');
 assert.ok(!html.includes('wa.me/') && !javascript.includes('wa.me/'), 'WhatsApp-Link darf nicht angezeigt werden.');

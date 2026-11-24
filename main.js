@@ -1012,7 +1012,7 @@ function updateConfiguredContent(lang, t) {
   woodSelect.value = selectedWood;
 }
 
-let currentLang = 'it';
+let currentLang = 'de';
 try {
   const savedLang = localStorage.getItem('lang');
   if (Object.hasOwn(translations, savedLang)) currentLang = savedLang;
